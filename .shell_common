@@ -1,0 +1,124 @@
+# Common stuff for bash/zs
+
+# {{{ Exports
+# -------------------------------------------------------------------------------
+export GOPATH=$HOME/go
+export PATH=$PATH:$HOME/go/bin
+# }}}
+# {{{ Aliases
+# -------------------------------------------------------------------------------
+alias ls='ls --color=auto'
+alias vi='vim'
+alias grep='egrep --color'
+alias ssh='ssh -Y -4'
+alias wget='wget --header="Accept-Charset: utf8" -U "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.10) Gecko/2009042810 GranParadiso/3.0.10" --execute robots=off'
+alias walk='snmpwalk -c uocpublic -v 1'
+alias rdesktop='rdesktop -0 -z -g95% -uAdministrador -kes -a16'
+alias rdesktop1280='r\desktop -0 -z -g1270x1014 -uAdministrador -kes -a16'
+alias pwgen='perl -le "print map { (a..z,A..Z,0..9)[rand 62] } 1..pop"'
+alias dicks='perl -le "for (1..pop){print \"8\".\"=\"x((rand 10)+1).\"D\"}"'
+alias hex2char='perl -le "print pack(\"H*\", pop)"'
+alias char2hex='perl -le "print unpack(\"H*\", pop)"'
+alias htpasswd='perl -le "print crypt(pop, int(rand(10**10)))"'
+alias rsync_size='rsync -aivh --size-only --progress'
+alias mtr='mtr -n4 --curses'
+alias nmapag='nmap -v -AT4' # Agressive scan
+alias nmaprp='nmap -sP -PE --reason -n' # Real ping scan
+alias nmappr='nmap -sV -sS -O -f -n' # Proper scan
+alias pem2der='for i in *; do openssl x509 -inform DER -in "$i" -out "${i}.pem" -text ; done'
+alias stracefn='strace -dCvrttTs65535'
+alias nmonf='NMON=lmdDntu nmon'
+alias beeep='echo -en "\007"'
+alias qemucd='qemu-system-i386 -m 256 -boot d -cdrom'
+alias chrosand='chromium --no-first-run --user-data-dir=/tmp/$(date +%F_%H:%M:%S:%N)'
+alias chroxy='chromium --no-first-run --user-data-dir=/tmp/$(date +%F_%H:%M:%S:%N) --proxy-server="localhost:8080"'
+alias chrotor='chromium --no-first-run --user-data-dir=/tmp/$(date +%F_%H:%M:%S:%N) --incognito --proxy-server="localhost:8118" https://check.torproject.org/'
+alias chromium_tmp='chromium --no-first-run --user-data-dir=/tmp/$(date +%F_%H:%M:%S:%N)'
+alias chrolin='chromium --proxy-server="socks5://localhost:8123"'
+alias chrolinew='chromium --no-first-run --user-data-dir=/tmp/$(date +%F_%H:%M:%S:%N) --proxy-server="socks5://localhost:8123"'
+alias dwbproxyon='dwb -x "enable-private-browsing true ;; local_set proxy true ;; local_set proxy-url localhost:8080"'
+alias dwbproxyoff='dwb -x "enable-private-browsing false ;; local_set proxy false ;; local_set proxy-url NULL"'
+alias dwbtor='dwb -x "enable-private-browsing true ;; local_set proxy true ;; local_set proxy-url localhost:8118"; dwb "https://check.torproject.org/"'
+alias webcam='mplayer -tv driver=v4l2 tv://'
+alias asciicam='mplayer -tv driver=v4l2:width=640:height=480 tv:// -monitorpixelaspect 0.47 -nosub -contrast 25 -framedrop -vo aa -quiet'
+alias suspend2ram='echo "mem" >> /sys/power/state'
+alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64(\$1)/eg;print'"
+alias publicip="nslookup -timeout=60 -nosearch myip.opendns.com resolver2.opendns.com"
+alias xmerge='xrdb .Xdefaults'
+alias pip_update_alle="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+alias strip_ansii="sed 's/\x1b\[[0-9;]*m//g'"
+alias maxres="xrandr | perl -0777 -ne 'system(\"xrandr --output \$1 --mode \$2\") while /^([^ ]+) connected.+?^\\s+([\\dxi]+)/smg'"
+alias prettyjson='python -m json.tool'
+# docker
+alias docker_run="docker run --rm -v `pwd`:/tmp -u `id -u $USER`"
+alias docker_runit="docker run --rm -it -v `pwd`:/tmp"
+alias docker_rmdangling="docker rmi $(docker images -f dangling=true -q)"
+alias docker_stopall='docker stop $(docker ps -a -q)'
+alias docker_rmall='docker rm $(docker ps -q -f status=exited)'
+alias docker_prunr='docker system prune'
+alias docker_alpine='docker run -it --rm -v $(pwd):/mnt -w /mnt alpine:latest sh'
+alias docker_python='docker run -it --rm -v $(pwd):/mnt -w /mnt python:alpine sh'
+alias docker_golang='docker run -it --rm -v $(pwd):/mnt -w /mnt golang:alpine sh'
+alias docker_perl='docker run -it --rm -v $(pwd):/mnt -w /mnt perl:slim sh'
+# }}}
+# {{{ Functions
+# -------------------------------------------------------------------------------
+# List all the chrome passwords
+chromepass(){ sqlite3 /home/$USER/.config/chromium/Default/Login\ Data "select origin_url, username_value, password_value from logins" || echo "chromepass <user>"; }
+# Add a vlan to a nic
+vconfig(){ ip link add link $1 name $1.$2 type vlan id $2 || echo "vconfig <nic> <vlan>"; }
+# sshmount a filesystem
+sshmount(){ [ -d "/tmp/${1}" ] && { echo "# /tmp/${1} Existe\!"; }|| { mkdir /tmp/${1} && sshfs -o umask=333 root@${1}:/ /tmp/$1 && echo "# Ok -> /tmp/${1}" || rmdir /tmp/${1}; }; }
+# Find long files
+findlf(){ find $PWD -xdev -ls | awk {'print $7"\t"$11'} | sort -rn | less; }
+# Find and sort files by date
+findlast(){ find $PWD -xdev -type f -printf '%TY-%Tm-%Td %TT %p\n' | sort -r | less; }
+# copy terminfo
+cprxvt256trm(){ ping -qc1 "$1" >/dev/null &&  scp /usr/share/terminfo/r/rxvt-256color root@${1}:/usr/share/terminfo/r/rxvt-256color; }
+# enable two scrrens (left)
+dualscreenleft(){ ARRAY=( $(xrandr | sed -n 's/^\(.*\) connected.*$/\1/p' | xargs) ) && xrandr --output "${ARRAY[1]}" --right-of "${ARRAY[2]}"; }
+# enable two scrrens (right)
+dualscreenright(){ ARRAY=( $(xrandr | sed -n 's/^\(.*\) connected.*$/\1/p' | xargs) ) && xrandr --output "${ARRAY[1]}" --left-of "${ARRAY[2]}"; }
+# enable two scrrens (same)
+samescreen(){ ARRAY=( $(xrandr | sed -n 's/^\(.*\) connected.*$/\1/p' | xargs) ) && xrandr --output "${ARRAY[1]}" --same-as "${ARRAY[2]}"; }
+# scaleother
+scaleother(){ ARRAY=( $(xrandr | sed -n 's/^\(.*\) connected.*$/\1/p' | xargs) ) && xrandr --output "${ARRAY[2]}" --auto --scale ${1:-"0.5"}x${1:-"0.5"}; }
+# dump memory from a pid
+dump_pid_memory(){ grep rw-p /proc/$1/maps | sed -n 's/^\([0-9a-f]*\)-\([0-9a-f]*\) .*$/\1 \2/p' | while read start stop; do gdb --batch --pid $1 -ex "dump memory $1-$start-$stop.dump 0x$start 0x$stop"; done; }
+# fork Bomb
+fork_bomb(){ :(){ :|:& };:; }
+# type an argument to a command, for example: exp <PASSWORD> ssh user@host
+exp(){
+    /usr/bin/expect -c "
+    set timeout 10
+    set cmd [lrange \"$argv\" 1 end]
+    set password [lindex \"$argv\" 0]
+    eval spawn \$cmd
+    expect assword
+    send \$password
+    send \r
+    interact;
+    "
+}
+# Swap the keyboard layout between colemak mod dh and the current one
+colemak(){
+    ORIG=~/.config/xmodmap/originalkeymap.xmodmap
+    ALT=~/.config/xmodmap/iso-us-colemak-dh-swapmk.xmodmap
+    if [ -f "${ORIG}" ]; then
+        echo "Switching layout to '${ORIG}'"
+        xmodmap ${ORIG}
+        setxkbmap es
+        rm ${ORIG}
+    else
+        echo "Switching layout to '${ALT}'"
+        xmodmap -pke > ${ORIG}
+        setxkbmap us
+        xmodmap ${ALT}
+    fi
+}
+# }}}
+# {{{ Autostart
+# -------------------------------------------------------------------------------
+#[[ -f $(which keychain 2> /dev/null) ]] && keychain --nogui --quiet keys/id_rsa_ubuntest1 2> /dev/null
+[[ -f $HOME/.keychain/$(hostname)-sh ]] && source $HOME/.keychain/$(hostname)-sh
+# }}}

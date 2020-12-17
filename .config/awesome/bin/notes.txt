@@ -1,0 +1,2 @@
+vibrant -> https://github.com/generaltso/vibrant
+colors and hex2col -> https://github.com/nixers-projects/urnn/tree/master/colors/sin_colors

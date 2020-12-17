@@ -1,0 +1,117 @@
+!.Xdefaults
+!'xrdb .Xdefaults' to apply
+!
+!{{{    misc
+!-------------------------------------------------------------------------------
+Xcursor*theme:  neutral
+Xcursor*size:   22
+!}}}
+!{{{    xft
+!-------------------------------------------------------------------------------
+!Xft.dpi:       auto
+Xft.antialias: true
+Xft.autohint:  false
+Xft.hinting:   true
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.rgba:      rgb
+!}}}
+!{{{    urxvt*
+!-------------------------------------------------------------------------------
+! Misc & Matcher
+urxvt*termName:        rxvt-256color
+urxvt*loginShell:      true
+urxvt*cutchars:        "()*,<>[]{}|'"
+urxvt*perl-lib:        /usr/lib/urxvt/perl/
+urxvt*perl-ext-common: default,matcher
+urxvt*url-launcher:    firefox
+urxvt*matcher.button:  1
+urxvt*print-pipe:      cat > $HOME/$(echo urxvt.dump.$(date +%s))
+urxvt*buffered:        false
+urxvt*saveLines:       8192
+! Appaerance
+urxvt*borderless:   true
+urxvt*fading:       30
+urxvt*depth:        32
+urxvt*background:   rgba:0000/0000/0000/BBBB
+urxvt*shading:      15
+! Next line must be set to false to use real transparency
+urxvt*transparent:  false
+urxvt*pointerColor: #919191
+urxvt*colorUL:      #4682B4
+! Fonts
+URxvt.xftAntialias:     true
+URxvt.font:             xft:Terminus:pixelsize=9:antialias=true:hinting=true
+URxvt.boldFont:         xft:Terminus:bold:pixelsize=9:antialias=true:hinting=true
+URxvt.italicFont:       xft:Terminus:italic:pixelsize=9:antialias=true:hinting=true
+URxvt.bolditalicFont:   xft:Terminus:bold:italic:pixelsize=9:antialias=true:hinting=true
+! Scroll
+urxvt*scrollBar:        false
+urxvt*skipScroll:       false
+urxvt*jumpScroll:       true
+urxvt*secondaryScroll:  true
+urxvt*scrollWithBuffer: true
+!! Tango Colors
+urxvt*foreground:   white
+!urxvt*borderColor:  #151515
+urxvt*colorBD:      #FFFFFF
+urxvt*cursorColor:  #FFA500
+urxvt*cursorColor2: pink
+urxvt*color0:       #2E3436
+urxvt*color1:       #CC0000
+urxvt*color2:       #4E9A06
+urxvt*color3:       #C4A000
+urxvt*color4:       #3465A4
+urxvt*color5:       #75507B
+urxvt*color6:       #16989A
+urxvt*color7:       #D3D7CF
+urxvt*color8:       #555753
+urxvt*color9:       #EF2929
+urxvt*color10:      #8AE234
+urxvt*color11:      #FCE94F
+urxvt*color12:      #729FCF
+urxvt*color13:      #AD7FA8
+urxvt*color14:      #34E2E2
+urxvt*color15:      #EEEEEE
+!!}}}
+!{{{    XTerm*
+!-------------------------------------------------------------------------------
+XTerm*termName:           XTerm-256color
+XTerm*internalBorder:     0
+XTerm*loginShell:         true
+XTerm*scrollBar:          false
+XTerm*cursorBlink:        true
+XTerm*metaSendsEscape:    true
+XTerm*altSendsEscape:     true
+XTerm*geometry:           80x26
+XTerm*saveLines:          8192
+XTerm*dynamicColors:      on
+XTerm*highlightSelection: true
+! Catch URLs
+XTerm*charClass: 33:48,35-38:48,39:43,42-47:48,58-59:48,61:48,63-64:48,126:48
+! Appearance
+XTerm*faceName:    xft:xos4 terminus:antialias=false
+XTerm*faceSize:    9
+XTerm*cursorColor: #ffa500
+XTerm*background:  #000000
+XTerm*foreground:  #dcdccc
+! Tango Color Scheme
+XTerm*color0:  #2e3436
+XTerm*color1:  #cc0000
+XTerm*color2:  #4e9a06
+XTerm*color3:  #c4a000
+XTerm*color4:  #3465a4
+XTerm*color5:  #75507b
+XTerm*color6:  #0b939b
+XTerm*color7:  #d3d7cf
+XTerm*color8:  #555753
+XTerm*color9:  #ef2929
+XTerm*color10: #8ae234
+XTerm*color11: #fce94f
+XTerm*color12: #729fcf
+XTerm*color13: #ad7fa8
+XTerm*color14: #00f5e9
+XTerm*color15: #eeeeec
+!}}}
+!
+! vim: set filetype=xdefaults

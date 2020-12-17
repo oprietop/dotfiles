@@ -1,0 +1,72 @@
+# i3 status bar config
+# Started with copy of /etc/i3status.conf
+# http://i3wm.org/docs/userguide.html#_configuring_i3bar
+
+general {
+        colors = true
+        interval = 5
+}
+
+order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "load"
+order += "disk /"
+order += "run_watch DHCP"
+order += "ethernet eno1"
+order += "wireless wlan0"
+order += "battery 0"
+order += "tztime local"
+
+run_watch DHCP {
+        pidfile = "/var/run/dhcpcd-*.pid"
+        format = "DHCP"
+}
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+}
+
+cpu_usage {
+    format = "CPU %usage"
+}
+
+cpu_temperature 0 {
+        format = "%degrees °C"
+        max_threshold = 50
+}
+
+load {
+        format = "%1min %5min %15min"
+         max_threshold = 5
+}
+
+disk "/" {
+        format = "/ %free"
+}
+
+ethernet eno1 {
+        # if you use %speed, i3status requires the cap_net_admin capability
+        format_up = "LAN %ip (%speed)"
+        format_down = "E down"
+}
+
+wireless wlan0 {
+        format_up = "WIFI (%quality at %essid, %bitrate) %ip"
+        format_down = ""
+}
+
+battery 0 {
+        format = "%status %percentage %remaining %emptytime"
+        #format_down = "No battery"
+        format_down = ""
+        status_chr = "⚇ CHR"
+        status_bat = "⚡ BAT"
+        status_full = "☻ FULL"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
+}

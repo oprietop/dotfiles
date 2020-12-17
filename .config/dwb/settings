@@ -1,0 +1,6 @@
+[default]
+font=terminus 10
+background-tabs=true
+auto-completion=true
+enable-page-cache=true
+ssl-strict=false
