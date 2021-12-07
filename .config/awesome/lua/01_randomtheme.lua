@@ -67,7 +67,7 @@ function rndtheme()
 --   theme.layout_fullscreen = layoutdir.."/fullscreenw.png"
     theme.layout_tilebottom = layoutdir.."/tilebottomw.png"
     theme.layout_tileleft   = layoutdir.."/tileleftw.png"
-    teme.layout_tile       = layoutdir.."/tilew.png"
+    theme.layout_tile       = layoutdir.."/tilew.png"
     theme.layout_tiletop    = layoutdir.."/tiletopw.png"
 --    theme.layout_spiral     = layoutdir.."/spiralw.png"
 --    theme.layout_dwindle    = layoutdir.."/dwindlew.png"
