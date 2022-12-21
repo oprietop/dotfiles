@@ -18,6 +18,7 @@ fi
 [ -f "$(which xcompmgr)"    ] && xcompmgr -c -n&
 [ -f "$(which urxvtd)"      ] && [ "$TERMINAL" = "urxvtc" ] && urxvtd -o -q -f
 [ -f "$(which wicd-client)" ] && wicd-gtk --tray &
+[ -f "$(which nm-applet)"   ] && nm-applet &
 [ -f "$(which irexec)"      ] && [ "$(pgrep -f irexec | wc -l)" -eq "0" ] && irexec -d
 # Exec WM
 exec awesome > ~/.awesome.err 2>&1

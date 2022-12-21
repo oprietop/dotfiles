@@ -50,16 +50,16 @@ alias strip_ansii="sed 's/\x1b\[[0-9;]*m//g'"
 alias maxres="xrandr | perl -0777 -ne 'system(\"xrandr --output \$1 --mode \$2\") while /^([^ ]+) connected.+?^\\s+([\\dxi]+)/smg'"
 alias prettyjson='python -m json.tool'
 # docker
-alias docker_run="docker run --rm -v `pwd`:/tmp -u `id -u $USER`"
-alias docker_runit="docker run --rm -it -v `pwd`:/tmp"
-alias docker_rmdangling="docker rmi $(docker images -f dangling=true -q)"
-alias docker_stopall='docker stop $(docker ps -a -q)'
-alias docker_rmall='docker rm $(docker ps -q -f status=exited)'
-alias docker_prunr='docker system prune'
-alias docker_alpine='docker run -it --rm -v $(pwd):/mnt -w /mnt alpine:latest sh'
-alias docker_python='docker run -it --rm -v $(pwd):/mnt -w /mnt python:alpine sh'
-alias docker_golang='docker run -it --rm -v $(pwd):/mnt -w /mnt golang:alpine sh'
-alias docker_perl='docker run -it --rm -v $(pwd):/mnt -w /mnt perl:slim sh'
+#alias docker_run="docker run --rm -v `pwd`:/tmp -u `id -u $USER`"
+#alias docker_runit="docker run --rm -it -v `pwd`:/tmp"
+#alias docker_rmdangling="docker rmi $(docker images -f dangling=true -q)"
+#alias docker_stopall='docker stop $(docker ps -a -q)'
+#alias docker_rmall='docker rm $(docker ps -q -f status=exited)'
+#alias docker_prunr='docker system prune'
+#alias docker_alpine='docker run -it --rm -v $(pwd):/mnt -w /mnt alpine:latest sh'
+#alias docker_python='docker run -it --rm -v $(pwd):/mnt -w /mnt python:alpine sh'
+#alias docker_golang='docker run -it --rm -v $(pwd):/mnt -w /mnt golang:alpine sh'
+#alias docker_perl='docker run -it --rm -v $(pwd):/mnt -w /mnt perl:slim sh'
 # }}}
 # {{{ Functions
 # -------------------------------------------------------------------------------
@@ -120,5 +120,5 @@ colemak(){
 # {{{ Autostart
 # -------------------------------------------------------------------------------
 #[[ -f $(which keychain 2> /dev/null) ]] && keychain --nogui --quiet keys/id_rsa_ubuntest1 2> /dev/null
-[[ -f $HOME/.keychain/$(hostname)-sh ]] && source $HOME/.keychain/$(hostname)-sh
+#[[ -f $HOME/.keychain/$(hostname)-sh ]] && source $HOME/.keychain/$(hostname)-sh
 # }}}

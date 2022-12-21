@@ -24,6 +24,7 @@ function rndtheme()
              , darkvibrant  = "#000000"
              , muted        = "#ffffff"
              }
+    os.execute("chmod +x " .. bindir .. "vibrant")
     local v = pread(bindir .. "vibrant " .. rndwall)
     for key, value in v:gmatch("(%w+): (#%w+)") do
         loglua("(II) Got color: '" .. key .. "' -> '" .. value .. "'")
